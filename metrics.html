@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Metrics &mdash; Poutyne 0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Callbacks" href="callbacks.html" />
+    <link rel="prev" title="Experiment" href="experiment.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/poutyne-light.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiment.html">Experiment</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#epoch-metric-interface">Epoch Metric Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#epoch-metrics">Epoch Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Poutyne</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Metrics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/metrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-poutyne">
+<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>Epoch metrics are metrics calculated <strong>only</strong> at the end of every epoch. They need to be implemented following the interface class, but we provide an exhaustive list.</p>
+<div class="section" id="epoch-metric-interface">
+<h2>Epoch Metric Interface<a class="headerlink" href="#epoch-metric-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="poutyne.framework.metrics.EpochMetric">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.metrics.</code><code class="sig-name descname">EpochMetric</code><a class="reference internal" href="_modules/poutyne/framework/metrics/epoch_metrics/base.html#EpochMetric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.metrics.EpochMetric" title="Permalink to this definition">¶</a></dt>
+<dd><p>The abstract class representing a epoch metric which can be accumulated at each batch and calculated at the end
+of the epoch.</p>
+<dl class="method">
+<dt id="poutyne.framework.metrics.EpochMetric.forward">
+<em class="property">abstract </em><code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">y_pred</em>, <em class="sig-param">y_true</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/metrics/epoch_metrics/base.html#EpochMetric.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.metrics.EpochMetric.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>To define the behavior of the metric when called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_pred</strong> – The prediction of the model.</p></li>
+<li><p><strong>y_true</strong> – Target to evaluate the model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.metrics.EpochMetric.get_metric">
+<em class="property">abstract </em><code class="sig-name descname">get_metric</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/metrics/epoch_metrics/base.html#EpochMetric.get_metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.metrics.EpochMetric.get_metric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and return the metric.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="epoch-metrics">
+<h2>Epoch Metrics<a class="headerlink" href="#epoch-metrics" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="poutyne.framework.metrics.FBeta">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.metrics.</code><code class="sig-name descname">FBeta</code><span class="sig-paren">(</span><em class="sig-param">metric: str = 'fscore'</em>, <em class="sig-param">average: str = 'micro'</em>, <em class="sig-param">beta: float = 1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/metrics/epoch_metrics/fscores.html#FBeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.metrics.FBeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source code of this class is under the Apache v2 License and was copied from
+the AllenNLP project and has been modified.</p>
+<p>Compute precision, recall, F-measure and support for each class.</p>
+<p>The precision is the ratio <code class="docutils literal notranslate"><span class="pre">tp</span> <span class="pre">/</span> <span class="pre">(tp</span> <span class="pre">+</span> <span class="pre">fp)</span></code> where <code class="docutils literal notranslate"><span class="pre">tp</span></code> is the number of
+true positives and <code class="docutils literal notranslate"><span class="pre">fp</span></code> the number of false positives. The precision is
+intuitively the ability of the classifier not to label as positive a sample
+that is negative.</p>
+<p>The recall is the ratio <code class="docutils literal notranslate"><span class="pre">tp</span> <span class="pre">/</span> <span class="pre">(tp</span> <span class="pre">+</span> <span class="pre">fn)</span></code> where <code class="docutils literal notranslate"><span class="pre">tp</span></code> is the number of
+true positives and <code class="docutils literal notranslate"><span class="pre">fn</span></code> the number of false negatives. The recall is
+intuitively the ability of the classifier to find all the positive samples.</p>
+<p>The F-beta score can be interpreted as a weighted harmonic mean of
+the precision and recall, where an F-beta score reaches its best
+value at 1 and worst score at 0.</p>
+<p>If we have precision and recall, the F-beta score is simply:
+<code class="docutils literal notranslate"><span class="pre">F-beta</span> <span class="pre">=</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">beta</span> <span class="pre">**</span> <span class="pre">2)</span> <span class="pre">*</span> <span class="pre">precision</span> <span class="pre">*</span> <span class="pre">recall</span> <span class="pre">/</span> <span class="pre">(beta</span> <span class="pre">**</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">precision</span> <span class="pre">+</span> <span class="pre">recall)</span></code></p>
+<p>The F-beta score weights recall more than precision by a factor of
+<code class="docutils literal notranslate"><span class="pre">beta</span></code>. <code class="docutils literal notranslate"><span class="pre">beta</span> <span class="pre">==</span> <span class="pre">1.0</span></code> means recall and precision are equally important.</p>
+<p>The support is the number of occurrences of each class in <code class="docutils literal notranslate"><span class="pre">y_true</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – One of {‘fscore’, ‘precision’, ‘recall’}.
+Wheter to return the F-score, the precision or the recall. (Default value = ‘fscore’)</p></li>
+<li><p><strong>average</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>]</em>) – <p>One of {‘micro’ (default), ‘macro’, label_number}
+If the argument is of type integer, the score for this class (the label number) is calculated.
+Otherwise, this determines the type of averaging performed on the data:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">'micro'</span></code>:</dt><dd><p>Calculate metrics globally by counting the total true positives,
+false negatives and false positives.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">'macro'</span></code>:</dt><dd><p>Calculate metrics for each label, and find their unweighted mean.
+This does not take label imbalance into account.</p>
+</dd>
+</dl>
+<p>(Default value = ‘micro’)</p>
+</p></li>
+<li><p><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – The strength of recall versus precision in the F-score. (Default value = 1.0)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.metrics.F1">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.metrics.</code><code class="sig-name descname">F1</code><span class="sig-paren">(</span><em class="sig-param">average='micro'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/metrics/epoch_metrics/fscores.html#F1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.metrics.F1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias class for FBeta where <code class="docutils literal notranslate"><span class="pre">metric</span> <span class="pre">==</span> <span class="pre">'fscore'</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span> <span class="pre">==</span> <span class="pre">1</span></code>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="callbacks.html" class="btn btn-neutral float-right" title="Callbacks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="experiment.html" class="btn btn-neutral float-left" title="Experiment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Frédérik Paradis
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

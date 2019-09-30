@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model &mdash; Poutyne 0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Experiment" href="experiment.html" />
+    <link rel="prev" title="Here is Poutyne" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/poutyne-light.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiment.html">Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Poutyne</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-poutyne">
+<span id="model"></span><h1>Model<a class="headerlink" href="#module-poutyne" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="poutyne.framework.Model">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.</code><code class="sig-name descname">Model</code><span class="sig-paren">(</span><em class="sig-param">model</em>, <em class="sig-param">optimizer</em>, <em class="sig-param">loss_function</em>, <em class="sig-param">*</em>, <em class="sig-param">metrics=None</em>, <em class="sig-param">batch_metrics=None</em>, <em class="sig-param">epoch_metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Model class encapsulates a PyTorch module/network, a PyTorch optimizer, a loss function and
+metric functions. It allows the user to train a neural network without hand-coding the
+epoch/step logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.Module" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>torch.nn.Module</em></a>) – A PyTorch module.</p></li>
+<li><p><strong>optimizer</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.Optimizer" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>torch.optim.Optimizer</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>]</em>) – If torch.optim.Optimier, an initialized PyTorch.
+If str, should be the optimizer’s name in Pytorch (i.e. ‘Adam’ for torch.optim.Adam).
+(Default value = ‘sgd’)</p></li>
+<li><p><strong>loss_function</strong> (<em>Union</em><em>[</em><em>Callable</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>]</em>) – can also be a string with the same name as a PyTorch loss function (either the functional or
+object name). The loss function must have the signature <code class="docutils literal notranslate"><span class="pre">loss_function(input,</span> <span class="pre">target)</span></code> where
+<code class="docutils literal notranslate"><span class="pre">input</span></code> is the prediction of the network and <code class="docutils literal notranslate"><span class="pre">target</span></code> is the ground truth.
+(Default value = None)</p></li>
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – <strong>*metrics is deprecated as of version 0.5.1. Use batch_metrics instead.*</strong>
+List of functions with the same signature as the loss function. Each metric
+can be any PyTorch loss function. It can also be a string with the same name as a PyTorch
+loss function (either the functional or object name). ‘accuracy’ (or just ‘acc’) is also a
+valid metric. Each metric function is called on each batch of the optimization and on the
+validation batches at the end of the epoch.
+(Default value = None)</p></li>
+<li><p><strong>batch_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of functions with the same signature as the loss function. Each metric
+can be any PyTorch loss function. It can also be a string with the same name as a PyTorch
+loss function (either the functional or object name). ‘accuracy’ (or just ‘acc’) is also a
+valid metric. Each metric function is called on each batch of the optimization and on the
+validation batches at the end of the epoch.
+(Default value = None)</p></li>
+<li><p><strong>epoch_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of functions with the same signature as
+<code class="xref py py-class docutils literal notranslate"><span class="pre">EpochMetric</span></code>
+(Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="poutyne.framework.Model.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#poutyne.framework.Model.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated PyTorch module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.Module" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))">torch.nn.Module</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.Model.optimizer">
+<code class="sig-name descname">optimizer</code><a class="headerlink" href="#poutyne.framework.Model.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated PyTorch optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.Optimizer" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))">torch.optim.Optimizer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.Model.loss_function">
+<code class="sig-name descname">loss_function</code><a class="headerlink" href="#poutyne.framework.Model.loss_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated loss function.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.Model.metrics">
+<code class="sig-name descname">metrics</code><a class="headerlink" href="#poutyne.framework.Model.metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>*metrics is deprecated as of version 0.5.1. Use batch_metrics instead.*</strong>
+The associated metric functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.Model.batch_metrics">
+<code class="sig-name descname">batch_metrics</code><a class="headerlink" href="#poutyne.framework.Model.batch_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated metric functions for every batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.Model.epoch_metrics">
+<code class="sig-name descname">epoch_metrics</code><a class="headerlink" href="#poutyne.framework.Model.epoch_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated metric functions for every epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<p>Using Numpy arrays (or tensors) dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">poutyne.framework</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Our training dataset with 800 samples.</span>
+<span class="n">num_train_samples</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_train_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_train_samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+<span class="c1"># Our validation dataset with 200 samples.</span>
+<span class="n">num_valid_samples</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">valid_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_valid_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_valid_samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+<span class="n">pytorch_module</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span> <span class="c1"># Our network</span>
+
+<span class="c1"># We create and optimize our model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="s1">&#39;cross_entropy&#39;</span><span class="p">,</span> <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span>
+          <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">valid_y</span><span class="p">),</span>
+          <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+          <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Epoch 1/5 0.02s Step 25/25: loss: 1.719885, acc: 19.375000, val_loss: 1.667446, val_acc: 22.000000
+Epoch 2/5 0.02s Step 25/25: loss: 1.705489, acc: 19.750000, val_loss: 1.660806, val_acc: 22.000000
+Epoch 3/5 0.01s Step 25/25: loss: 1.692345, acc: 19.625000, val_loss: 1.655008, val_acc: 22.500000
+...
+</pre></div>
+</div>
+<p>Using PyTorch DataLoader:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+<span class="kn">from</span> <span class="nn">poutyne.framework</span> <span class="k">import</span> <span class="n">Model</span>
+
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Our training dataset with 800 samples.</span>
+<span class="n">num_train_samples</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_train_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="p">(</span><span class="n">num_train_samples</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># Our validation dataset with 200 samples.</span>
+<span class="n">num_valid_samples</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">valid_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_valid_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="p">(</span><span class="n">num_valid_samples</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+<span class="n">valid_dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">valid_y</span><span class="p">)</span>
+<span class="n">valid_generator</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">valid_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">pytorch_module</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_train_samples</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="s1">&#39;cross_entropy&#39;</span><span class="p">,</span> <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span>
+                    <span class="n">valid_generator</span><span class="p">,</span>
+                    <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Epoch 1/5 0.05s Step 25/25: loss: 6.752676, acc: 0.000000, val_loss: 6.575071, val_acc: 0.000000
+Epoch 2/5 0.03s Step 25/25: loss: 6.454859, acc: 0.125000, val_loss: 6.279577, val_acc: 0.000000
+Epoch 3/5 0.03s Step 25/25: loss: 6.158523, acc: 2.125000, val_loss: 5.985811, val_acc: 9.500000
+...
+</pre></div>
+</div>
+<dl class="method">
+<dt id="poutyne.framework.Model.cpu">
+<code class="sig-name descname">cpu</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.cpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.cpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tranfers the network on the CPU. The arguments are passed to the <a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.Module.cpu" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.cpu()</span></code></a>
+method. Notice that the device is saved so that the batches can send to the right device
+before passing it to the network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PyTorch optimizers assume that the parameters have been transfered to the right device
+before their creations. Furthermore, future versions of PyTorch will no longer modify
+the parameters of a PyTorch module in-place when transferring them to another device.
+See this <a class="reference external" href="https://github.com/pytorch/pytorch/issues/7844">issue</a> and this
+<a class="reference external" href="https://github.com/pytorch/pytorch/pull/21613">pull request</a> for details.</p>
+<p>Since Poutyne supposes that the optimizer has been initialized before the Poutyne Model,
+necessarily the parameters are not guaranteed to be in sync with those contained in the
+optimizer once the PyTorch module is transferred to another device. Thus, this method
+takes care of this inconsistency by updating the parameters inside the optimizer.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><cite>self</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.cuda">
+<code class="sig-name descname">cuda</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.cuda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.cuda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tranfers the network on the GPU. The arguments are passed to the <a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.Module.cuda" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.cuda()</span></code></a> method.
+Notice that the device is saved so that the batches can send to the right device before passing it to
+the network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PyTorch optimizers assume that the parameters have been transfered to the right device
+before their creations. Furthermore, future versions of PyTorch will no longer modify
+the parameters of a PyTorch module in-place when transferring them to another device.
+See this <a class="reference external" href="https://github.com/pytorch/pytorch/issues/7844">issue</a> and this
+<a class="reference external" href="https://github.com/pytorch/pytorch/pull/21613">pull request</a> for details.</p>
+<p>Since Poutyne supposes that the optimizer has been initialized before the Poutyne Model,
+necessarily the parameters are not guaranteed to be in sync with those contained in the
+optimizer once the PyTorch module is transferred to another device. Thus, this method
+takes care of this inconsistency by updating the parameters inside the optimizer.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><cite>self</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.evaluate">
+<code class="sig-name descname">evaluate</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">batch_size=32</em>, <em class="sig-param">return_pred=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the loss and the metrics of the network on batches of samples and optionally
+returns the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>] or </em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>] </em><em>of Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>]</em>) – Input to the model. Union[Tensor, ndarray] if the model has a single input.
+Union[tuple, list] of Union[Tensor, ndarray] if the model has multiple inputs.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>] or </em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>] </em><em>of Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>]</em>) – Target, corresponding ground truth.
+Union[Tensor, ndarray] if the model has a single output.
+Union[tuple, list] of Union[Tensor, ndarray] if the model has multiple outputs.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of samples given to the network at one time.
+(Default value = 32)</p></li>
+<li><p><strong>return_pred</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to return the predictions.
+(Default value = False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Tuple <code class="docutils literal notranslate"><span class="pre">(loss,</span> <span class="pre">metrics,</span> <span class="pre">pred_y)</span></code> where specific elements are omitted if not
+applicable. If only loss is applicable, then it is returned as a float.</p>
+<p><code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a Numpy array of size <code class="docutils literal notranslate"><span class="pre">n</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of batch metrics plus the number of epoch metrics if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">1</span></code>, then <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a float. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is
+omitted. The first elements of <code class="docutils literal notranslate"><span class="pre">metrics</span></code> are the batch metrics and are
+followed by the epoch metrics. See the <a class="reference internal" href="#poutyne.framework.Model.fit_generator" title="poutyne.framework.Model.fit_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit_generator()</span></code></a> method
+for examples with batch metrics and epoch metrics.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is True, <code class="docutils literal notranslate"><span class="pre">pred_y</span></code> is the list of the predictions
+of each batch with tensors converted into Numpy arrays. It is otherwise ommited.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.evaluate_generator">
+<code class="sig-name descname">evaluate_generator</code><span class="sig-paren">(</span><em class="sig-param">generator</em>, <em class="sig-param">*</em>, <em class="sig-param">steps=None</em>, <em class="sig-param">return_pred=False</em>, <em class="sig-param">return_ground_truth=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.evaluate_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.evaluate_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the loss and the metrics of the network on batches of samples and optionaly returns
+the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>generator</strong> – Generator-like object for the dataset. See the <a class="reference internal" href="#poutyne.framework.Model.fit_generator" title="poutyne.framework.Model.fit_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit_generator()</span></code></a> method for
+details on the types of generators supported.</p></li>
+<li><p><strong>steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Number of iterations done on <code class="docutils literal notranslate"><span class="pre">generator</span></code>.
+(Defaults the number of steps needed to see the entire dataset)</p></li>
+<li><p><strong>return_pred</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to return the predictions.
+(Default value = False)</p></li>
+<li><p><strong>return_ground_truth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to return the ground truths.
+(Default value = False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Tuple <code class="docutils literal notranslate"><span class="pre">(loss,</span> <span class="pre">metrics,</span> <span class="pre">pred_y,</span> <span class="pre">true_y)</span></code> where specific elements are
+omitted if not applicable. If only loss is applicable, then it is returned
+as a float.</p>
+<p><code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a Numpy array of size <code class="docutils literal notranslate"><span class="pre">n</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of batch metrics plus the number of epoch metrics if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">1</span></code>, then <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a float. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is
+omitted. The first elements of <code class="docutils literal notranslate"><span class="pre">metrics</span></code> are the batch metrics and are
+followed by the epoch metrics.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is True, <code class="docutils literal notranslate"><span class="pre">pred_y</span></code> is the list of the predictions
+of each batch with tensors converted into Numpy arrays. It is otherwise ommited.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">return_ground_truth</span></code> is True, <code class="docutils literal notranslate"><span class="pre">true_y</span></code> is the list of the ground truths
+of each batch with tensors converted into Numpy arrays. It is otherwise ommited.</p>
+</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>With no metrics:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span><span class="n">test_generator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With only one batch metric:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">my_metric_fn</span><span class="p">])</span>
+<span class="n">loss</span><span class="p">,</span> <span class="n">my_metric</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span><span class="n">test_generator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With several batch metrics:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">my_metric1_fn</span><span class="p">,</span> <span class="n">my_metric2_fn</span><span class="p">])</span>
+<span class="n">loss</span><span class="p">,</span> <span class="p">(</span><span class="n">my_metric1</span><span class="p">,</span> <span class="n">my_metric2</span><span class="p">)</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span><span class="n">test_generator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With one batch metric and one epoch metric:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">my_metric_fn</span><span class="p">],</span> <span class="n">epoch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">MyEpochMetricClass</span><span class="p">()])</span>
+<span class="n">loss</span><span class="p">,</span> <span class="p">(</span><span class="n">my_batch_metric</span><span class="p">,</span> <span class="n">my__epoch_metric</span><span class="p">)</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span><span class="n">test_generator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With batch metrics and <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> flag:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">my_metric1_fn</span><span class="p">,</span> <span class="n">my_metric2_fn</span><span class="p">])</span>
+<span class="n">loss</span><span class="p">,</span> <span class="p">(</span><span class="n">my_metric1</span><span class="p">,</span> <span class="n">my_metric2</span><span class="p">),</span> <span class="n">pred_y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span>
+    <span class="n">test_generator</span><span class="p">,</span> <span class="n">return_pred</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>With batch metrics, <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> and <code class="docutils literal notranslate"><span class="pre">return_ground_truth</span></code> flags:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="n">my_metric1_fn</span><span class="p">,</span> <span class="n">my_metric2_fn</span><span class="p">])</span>
+<span class="n">loss</span><span class="p">,</span> <span class="p">(</span><span class="n">my_metric1</span><span class="p">,</span> <span class="n">my_metric2</span><span class="p">),</span> <span class="n">pred_y</span><span class="p">,</span> <span class="n">true_y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate_generator</span><span class="p">(</span>
+    <span class="n">test_generator</span><span class="p">,</span> <span class="n">return_pred</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">return_ground_truth</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.evaluate_on_batch">
+<code class="sig-name descname">evaluate_on_batch</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">*</em>, <em class="sig-param">return_pred=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.evaluate_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.evaluate_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the loss and the metrics of the network on a single batch of samples and optionally
+returns the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Input data as a batch.</p></li>
+<li><p><strong>y</strong> – Target data as a batch.</p></li>
+<li><p><strong>return_pred</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to return the predictions for <code class="docutils literal notranslate"><span class="pre">batch</span></code>.
+(Default value = False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Tuple <code class="docutils literal notranslate"><span class="pre">(loss,</span> <span class="pre">metrics,</span> <span class="pre">pred_y)</span></code> where specific elements are omitted if not
+applicable. If only loss is applicable, then it is returned as a float.</p>
+<p><cite>metrics`</cite> is a Numpy array of size <code class="docutils literal notranslate"><span class="pre">n</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of metrics if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">1</span></code>, then <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a
+float. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is omitted.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is True, <code class="docutils literal notranslate"><span class="pre">pred_y</span></code> is the list of the predictions
+of each batch with tensors converted into Numpy arrays. It is otherwise ommited.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">validation_data=None</em>, <em class="sig-param">*</em>, <em class="sig-param">batch_size=32</em>, <em class="sig-param">epochs=1000</em>, <em class="sig-param">steps_per_epoch=None</em>, <em class="sig-param">validation_steps=None</em>, <em class="sig-param">batches_per_step=1</em>, <em class="sig-param">initial_epoch=1</em>, <em class="sig-param">verbose=True</em>, <em class="sig-param">callbacks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the model on a dataset. This method creates generators and calls
+the <a class="reference internal" href="#poutyne.framework.Model.fit_generator" title="poutyne.framework.Model.fit_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit_generator()</span></code></a> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>] or </em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>] </em><em>of Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>]</em>) – Training dataset. Union[Tensor, ndarray] if the model has a single input.
+Union[tuple, list] of Union[Tensor, ndarray] if the model has multiple inputs.</p></li>
+<li><p><strong>y</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>] or </em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>] </em><em>of Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>]</em>) – Target. Union[Tensor, ndarray] if the model has a single output.
+Union[tuple, list] of Union[Tensor, ndarray] if the model has multiple outputs.</p></li>
+<li><p><strong>validation_data</strong> (Tuple[<code class="docutils literal notranslate"><span class="pre">x_val</span></code>, <code class="docutils literal notranslate"><span class="pre">y_val</span></code>]) – Same format as <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> previously described. Validation dataset on which to
+evaluate the loss and any model metrics at the end of each epoch. The model will not be
+trained on this data.
+(Default value = None)</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of samples given to the network at one time.
+(Default value = 32)</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of times the entire training dataset is seen.
+(Default value = 1000)</p></li>
+<li><p><strong>steps_per_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Number of batch used during one epoch. Obviously, using
+this argument may cause one epoch not to see the entire training dataset or see it
+multiple times.
+(Defaults the number of steps needed to see the entire training dataset)</p></li>
+<li><p><strong>validation_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Same as for <code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code> but for the validation
+dataset.
+(Defaults to <code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code> if provided or the number of steps needed to
+see the entire validation dataset)</p></li>
+<li><p><strong>batches_per_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of batches on which to compute the running loss before
+backpropagating it through the network. Note that the total loss used for backpropagation is
+the mean of the <cite>batches_per_step</cite> batch losses.
+(Default value = 1)</p></li>
+<li><p><strong>initial_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Epoch at which to start training
+(useful for resuming a previous training run).
+(Default value = 1)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to display the progress of the training.
+(Default value = True)</p></li>
+<li><p><strong>callbacks</strong> (<em>List</em><em>[</em><a class="reference internal" href="callbacks.html#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><em>Callback</em></a><em>]</em>) – List of callbacks that will be called
+during training.
+(Default value = None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of dict containing the history of each epoch.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span>
+                    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">valid_y</span><span class="p">)</span>
+                    <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+                    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">history</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.7198852968215943</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.019999928001197986</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.375</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.6674459838867188</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.7054892110824584</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.015421080999658443</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.75</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.660806336402893</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.6923445892333984</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.01363091799794347</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.625</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.6550078630447387</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">}</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.fit_generator">
+<code class="sig-name descname">fit_generator</code><span class="sig-paren">(</span><em class="sig-param">train_generator</em>, <em class="sig-param">valid_generator=None</em>, <em class="sig-param">*</em>, <em class="sig-param">epochs=1000</em>, <em class="sig-param">steps_per_epoch=None</em>, <em class="sig-param">validation_steps=None</em>, <em class="sig-param">batches_per_step=1</em>, <em class="sig-param">initial_epoch=1</em>, <em class="sig-param">verbose=True</em>, <em class="sig-param">callbacks=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.fit_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.fit_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the model on a dataset using a generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_generator</strong> – <p>Generator-like object for the training dataset. The generator must
+yield a batch in the form of a tuple (x, y) where <code class="docutils literal notranslate"><span class="pre">x</span></code> is the input and <code class="docutils literal notranslate"><span class="pre">y</span></code> is the
+target <code class="docutils literal notranslate"><span class="pre">len(x)</span></code> is taken as the batch size (or the first element of <code class="docutils literal notranslate"><span class="pre">x</span></code> in case of
+multi inputs). The loss and the metrics are averaged using this batch size. If the batch
+size cannot be, inferred then a warning is raised and the “batch size” defaults to 1.</p>
+<p>If the generator does not have a method <code class="docutils literal notranslate"><span class="pre">__len__()</span></code>, either the <code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code>
+argument must be provided, or the iterator returned raises a StopIteration exception at
+the end of the training dataset. PyTorch DataLoaders object do provide a <code class="docutils literal notranslate"><span class="pre">__len__()</span></code>
+method.</p>
+<p>Before each epoch, the method <code class="docutils literal notranslate"><span class="pre">__iter__()</span></code> on the generator is called and the method
+<code class="docutils literal notranslate"><span class="pre">__next__()</span></code> is called for each step on resulting object returned by <code class="docutils literal notranslate"><span class="pre">__iter__()</span></code>.
+Notice that a call to <code class="docutils literal notranslate"><span class="pre">__iter__()</span></code> on a generator made using the python keyword
+<code class="docutils literal notranslate"><span class="pre">yield</span></code> returns the generator itself.</p>
+</p></li>
+<li><p><strong>valid_generator</strong> (<em>optional</em>) – Generator-like object for the validation dataset. This generator
+is optional. The generator is used the same way as the  generator <code class="docutils literal notranslate"><span class="pre">train_generator</span></code>. If
+the generator does not have a method <code class="docutils literal notranslate"><span class="pre">__len__()</span></code>, either the <code class="docutils literal notranslate"><span class="pre">validation_steps</span></code> or the
+<code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code> argument must be provided or the iterator returned raises a StopIteration
+exception at the end of the validation dataset.
+(Default value = None)</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of times the entire training dataset is seen.
+(Default value = 1000)</p></li>
+<li><p><strong>steps_per_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Number of batch used during one epoch. Obviously, using this
+argument may cause one epoch not to see the entire training dataset or see it multiple times.
+(Defaults the number of steps needed to see the entire
+training dataset)</p></li>
+<li><p><strong>validation_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Same as for <code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code> but for the validation dataset.
+(Defaults to <code class="docutils literal notranslate"><span class="pre">steps_per_epoch</span></code> if provided or the number of steps needed to see the entire
+validation dataset)</p></li>
+<li><p><strong>batches_per_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of batches on which to compute the running loss before
+backpropagating it through the network. Note that the total loss used for backpropagation is
+the mean of the <cite>batches_per_step</cite> batch losses.
+(Default value = 1)</p></li>
+<li><p><strong>initial_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Epoch at which to start training (useful for resuming a previous
+training run).
+(Default value = 1)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to display the progress of the training.
+(Default value = True)</p></li>
+<li><p><strong>callbacks</strong> (<em>List</em><em>[</em><a class="reference internal" href="callbacks.html#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><em>Callback</em></a><em>]</em>) – List of callbacks that will be called during
+training. (Default value = None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of dict containing the history of each epoch.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">train_generator</span><span class="p">,</span>
+                              <span class="n">valid_generator</span><span class="p">,</span>
+                              <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+                              <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">history</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.7198852968215943</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.019999928001197986</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.375</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.6674459838867188</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.7054892110824584</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.015421080999658443</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.75</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.660806336402893</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.0</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">1.6923445892333984</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.01363091799794347</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="mf">19.625</span><span class="p">,</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">1.6550078630447387</span><span class="p">,</span> <span class="s1">&#39;val_acc&#39;</span><span class="p">:</span> <span class="mf">22.5</span><span class="p">}</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.get_weight_copies">
+<code class="sig-name descname">get_weight_copies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.get_weight_copies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.get_weight_copies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing copies of the parameters of the network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.get_weights">
+<code class="sig-name descname">get_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.get_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.get_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing the parameters of the network. The tensors are just
+references to the parameters. To get copies of the weights, see the <a class="reference internal" href="#poutyne.framework.Model.get_weight_copies" title="poutyne.framework.Model.get_weight_copies"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_weight_copies()</span></code></a>
+method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.load_optimizer_state">
+<code class="sig-name descname">load_optimizer_state</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.load_optimizer_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.load_optimizer_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the optimizer state saved using the <a class="reference external" href="https://pytorch.org/docs/master/torch.html#torch.save" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.save()</span></code></a> method or the
+<a class="reference internal" href="#poutyne.framework.Model.save_optimizer_state" title="poutyne.framework.Model.save_optimizer_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_optimizer_state()</span></code></a> method of this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> – File-like object (has to implement fileno that returns a file descriptor) or string
+containing a file name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.load_weights">
+<code class="sig-name descname">load_weights</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.load_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.load_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the weights saved using the <a class="reference external" href="https://pytorch.org/docs/master/torch.html#torch.save" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.save()</span></code></a> method or the <a class="reference internal" href="#poutyne.framework.Model.save_weights" title="poutyne.framework.Model.save_weights"><code class="xref py py-func docutils literal notranslate"><span class="pre">save_weights()</span></code></a> method
+of this class. Contrary to <a class="reference external" href="https://pytorch.org/docs/master/torch.html#torch.load" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.load()</span></code></a>, the weights are not transfered to the device
+from which they were saved from. In other words, the PyTorch module will stay on the same
+device it already is on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> – File-like object (has to implement fileno that returns a file descriptor) or string
+containing a file name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">batch_size=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the predictions of the network given a dataset <code class="docutils literal notranslate"><span class="pre">x</span></code>, where the tensors are
+converted into Numpy arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>] or </em><em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>] </em><em>of Union</em><em>[</em><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>Tensor</em></a><em>, </em><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>]</em>) – Input to the model. Union[Tensor, ndarray] if the model has a single input.
+Union[tuple, list] of Union[Tensor, ndarray] if the model has multiple inputs.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of samples given to the network at one time.
+(Default value = 32)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Numpy arrays of the predictions.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.predict_generator">
+<code class="sig-name descname">predict_generator</code><span class="sig-paren">(</span><em class="sig-param">generator</em>, <em class="sig-param">*</em>, <em class="sig-param">steps=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.predict_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.predict_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the predictions of the network given batches of samples <code class="docutils literal notranslate"><span class="pre">x</span></code>, where the tensors are
+converted into Numpy arrays.</p>
+<dl class="simple">
+<dt>generator: Generator-like object for the dataset. The generator must yield a batch of</dt><dd><p>samples. See the <a class="reference internal" href="#poutyne.framework.Model.fit_generator" title="poutyne.framework.Model.fit_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit_generator()</span></code></a> method for details on the types of generators
+supported. This should only yield input data <code class="docutils literal notranslate"><span class="pre">x</span></code> and not the target <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+</dd>
+<dt>steps (int, optional): Number of iterations done on <code class="docutils literal notranslate"><span class="pre">generator</span></code>.</dt><dd><p>(Defaults the number of steps needed to see the entire dataset)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of the predictions of each batch with tensors converted into Numpy arrays.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.predict_on_batch">
+<code class="sig-name descname">predict_on_batch</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.predict_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.predict_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the predictions of the network given a batch <code class="docutils literal notranslate"><span class="pre">x</span></code>, where the tensors are converted
+into Numpy arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – Input data as a batch.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The predictions with tensors converted into Numpy arrays.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.save_optimizer_state">
+<code class="sig-name descname">save_optimizer_state</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.save_optimizer_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.save_optimizer_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the state of the current optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> – File-like object (has to implement fileno that returns a file descriptor) or string
+containing a file name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.save_weights">
+<code class="sig-name descname">save_weights</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.save_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.save_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the weights of the current network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> – File-like object (has to implement fileno that returns a file descriptor) or string
+containing a file name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.set_weights">
+<code class="sig-name descname">set_weights</code><span class="sig-paren">(</span><em class="sig-param">weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.set_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.set_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies the weights of the network with the given weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>weights</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Weights returned by either <a class="reference internal" href="#poutyne.framework.Model.get_weights" title="poutyne.framework.Model.get_weights"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_weights()</span></code></a> or <a class="reference internal" href="#poutyne.framework.Model.get_weight_copies" title="poutyne.framework.Model.get_weight_copies"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_weight_copies()</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.to">
+<code class="sig-name descname">to</code><span class="sig-paren">(</span><em class="sig-param">device</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tranfers the network on the specified device. The device is saved so that the batches can
+send to the right device before passing it to the network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PyTorch optimizers assume that the parameters have been transfered to the right device
+before their creations. Furthermore, future versions of PyTorch will no longer modify
+the parameters of a PyTorch module in-place when transferring them to another device.
+See this <a class="reference external" href="https://github.com/pytorch/pytorch/issues/7844">issue</a> and this
+<a class="reference external" href="https://github.com/pytorch/pytorch/pull/21613">pull request</a> for details.</p>
+<p>Since Poutyne supposes that the optimizer has been initialized before the Poutyne Model,
+necessarily the parameters are not guaranteed to be in sync with those contained in the
+optimizer once the PyTorch module is transferred to another device. Thus, this method
+takes care of this inconsistency by updating the parameters inside the optimizer.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensor_attributes.html#torch.torch.device" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>torch.torch.device</em></a>) – The device to which the network is sent.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>self</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.Model.train_on_batch">
+<code class="sig-name descname">train_on_batch</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">return_pred=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/model.html#Model.train_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.Model.train_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the model for the batch <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> and computes the loss and the metrics, and
+optionaly returns the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – Input data as a batch.</p></li>
+<li><p><strong>y</strong> – Target data as a batch.</p></li>
+<li><p><strong>return_pred</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to return the predictions.
+(Default value = False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>Float <code class="docutils literal notranslate"><span class="pre">loss</span></code> if no metrics were specified and <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is false.</p>
+<p>Otherwise, tuple <code class="docutils literal notranslate"><span class="pre">(loss,</span> <span class="pre">metrics)</span></code> if <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is false.
+<code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a Numpy array of size <code class="docutils literal notranslate"><span class="pre">n</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code> is the
+number of metrics if <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">1</span></code>, then <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is a
+float. If <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">==</span> <span class="pre">0</span></code>, the <code class="docutils literal notranslate"><span class="pre">metrics</span></code> is omitted.</p>
+<p>Tuple <code class="docutils literal notranslate"><span class="pre">(loss,</span> <span class="pre">metrics,</span> <span class="pre">pred_y)</span></code> if <code class="docutils literal notranslate"><span class="pre">return_pred</span></code> is true where
+<code class="docutils literal notranslate"><span class="pre">pred_y</span></code> is the predictions with tensors converted into Numpy
+arrays.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="experiment.html" class="btn btn-neutral float-right" title="Experiment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Here is Poutyne" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Frédérik Paradis
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

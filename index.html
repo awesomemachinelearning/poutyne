@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta content="Poutyne is a Keras-like framework for PyTorch and handles much of the boilerplating code needed to train neural networks." name="description" />
+<meta content="poutyne, poutine, deep learning, pytorch, neural network, keras, machine learning, data science, python" name="keywords" />
+<meta content="Frédérik Paradis" name="author" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Here is Poutyne &mdash; Poutyne 0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Model" href="model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#">
+          
+
+          
+            
+            <img src="_static/poutyne-light.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiment.html">Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Poutyne</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Here is Poutyne</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/GRAAL-Research/poutyne" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="here-is-poutyne">
+<h1>Here is Poutyne<a class="headerlink" href="#here-is-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>Poutyne is a Keras-like framework for <a class="reference external" href="https://pytorch.org/">PyTorch</a> and handles much of the boilerplating code needed to train neural networks.</p>
+<p>Use Poutyne to:</p>
+<ul class="simple">
+<li><p>Train models easily.</p></li>
+<li><p>Use callbacks to save your best model, perform early stopping and much more.</p></li>
+</ul>
+<p>Read the documentation at <a class="reference external" href="https://poutyne.org">Poutyne.org</a>.</p>
+<p>Poutyne is compatible with the <strong>latest version of PyTorch</strong> and  <strong>Python &gt;= 3.5</strong>.</p>
+<div class="section" id="cite">
+<h2>Cite<a class="headerlink" href="#cite" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bib notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">poutyne</span><span class="p">,</span>
+    <span class="na">author</span> <span class="p">=</span> <span class="s">{Paradis, Fr{\&#39;e}d{\&#39;e}rik}</span><span class="p">,</span>
+    <span class="na">title</span>  <span class="p">=</span> <span class="s">{{Poutyne: A Keras-like framework for PyTorch}}</span><span class="p">,</span>
+    <span class="na">year</span>   <span class="p">=</span> <span class="s">{2018}</span><span class="p">,</span>
+    <span class="na">note</span>   <span class="p">=</span> <span class="s">{\url{https://poutyne.org}}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-started-few-seconds-to-poutyne">
+<h1>Getting started: few seconds to Poutyne<a class="headerlink" href="#getting-started-few-seconds-to-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>The core data structure of Poutyne is a <a class="reference internal" href="model.html#poutyne.framework.Model" title="poutyne.framework.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>, a way to train your own <a class="reference external" href="https://pytorch.org/docs/master/nn.html">PyTorch</a> neural networks.</p>
+<p>How Poutyne works is that you create your <a class="reference external" href="https://pytorch.org/docs/master/nn.html">PyTorch</a> module (neural network) as usual but when comes the time to train it you feed it into the Poutyne Model, which handles all the steps, stats and callbacks, similar to what <a class="reference external" href="https://keras.io/">Keras</a> does.</p>
+<p>Here is a simple example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the Poutyne Model and define a toy dataset</span>
+<span class="kn">from</span> <span class="nn">poutyne.framework</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">num_train_samples</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">train_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_train_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">train_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_train_samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+<span class="n">num_valid_samples</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">valid_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_valid_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">valid_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_valid_samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+
+<span class="n">num_test_samples</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">test_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_test_samples</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">test_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_test_samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create yourself a <a class="reference external" href="https://pytorch.org/docs/master/nn.html">PyTorch</a> network:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pytorch_module</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can now use Poutyne’s model to train your network easily:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">pytorch_module</span><span class="p">,</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="s1">&#39;cross_entropy&#39;</span><span class="p">,</span>
+              <span class="n">batch_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">epoch_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">valid_x</span><span class="p">,</span> <span class="n">valid_y</span><span class="p">),</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This is really similar to the <a class="reference external" href="https://keras.io/models/model/#compile">model.compile</a> and <a class="reference external" href="https://keras.io/models/model/#fit">model.fit</a> functions as in <a class="reference external" href="https://keras.io/">Keras</a>.</p>
+<p>You can evaluate the performances of your network using the <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> method of Poutyne’s model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss_and_metrics</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_x</span><span class="p">,</span> <span class="n">test_y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or only predict on new data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, Poutyne is inspired a lot by the friendliness of <a class="reference external" href="https://keras.io/">Keras</a>. See the Poutyne documentation at <a class="reference external" href="https://poutyne.org/">Poutyne.org</a> for more.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Before installing Poutyne, you must have the latest version of <a class="reference external" href="https://pytorch.org/">PyTorch</a> in your environment.</p>
+<ul>
+<li><p><strong>Install the stable version of Poutyne:</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install poutyne
+</pre></div>
+</div>
+</li>
+<li><p><strong>Install the latest development version of Poutyne:</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install -U git+https://github.com/GRAAL-Research/poutyne.git@dev
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>Look at notebook files with full working <a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/examples/">examples</a>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/examples/introduction_pytorch_poutyne.ipynb">introduction_pytorch_poutyne.ipynb</a>  (<a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/tutorials/introduction_pytorch_poutyne_tutorial.ipynb">tutorial version</a>) - comparison of Poutyne with bare PyTorch and example of a Poutyne callback.</p></li>
+<li><p><a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/examples/transfer_learning.ipynb">transfer_learning.ipynb</a> - transfer learning on ResNet-18 on the <a class="reference external" href="http://www.vision.caltech.edu/visipedia/CUB-200-2011.html">CUB-200</a> dataset.</p></li>
+<li><p><a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/examples/policy_cifar_example.ipynb">policy_cifar_example.ipynb</a> - policies API, FastAI-like learning rate policies</p></li>
+<li><p><a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/examples/policy_interface.ipynb">policy_interface.ipynb</a> - example of policies</p></li>
+</ul>
+</div>
+<div class="section" id="contributing-to-poutyne">
+<h1>Contributing to Poutyne<a class="headerlink" href="#contributing-to-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>We welcome user input, whether it is regarding bugs found in the library or feature propositions ! Make sure to have a look at our <a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/CONTRIBUTING.md">contributing guidelines</a> for more details on this matter.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>Poutyne is GPLv3 licensed, as found in the <a class="reference external" href="https://github.com/GRAAL-Research/poutyne/blob/master/LICENSE">LICENSE file</a>.</p>
+</div>
+<div class="section" id="why-this-name-poutyne">
+<h1>Why this name, Poutyne?<a class="headerlink" href="#why-this-name-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>Poutyne (or poutine in Québécois) is now the well-known dish from Quebec composed of French fries, squeaky cheese curds and brown gravy. However, in Quebec, it also has the meaning of something that is an <a class="reference external" href="https://fr.wiktionary.org/wiki/poutine">“ordinary or common subject or activity”</a>. Thus, Poutyne will get rid of the ordinary boilerplate code that plain <a class="reference external" href="https://pytorch.org/">PyTorch</a> training usually entails.</p>
+<div class="figure align-default" id="id10">
+<img alt="Poutine" src="https://upload.wikimedia.org/wikipedia/commons/4/4e/La_Banquise_Poutine_%28cropped%29.jpg" />
+<p class="caption"><span class="caption-text">Yuri Long from Arlington, VA, USA [<a class="reference external" href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>]</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiment.html">Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="model.html" class="btn btn-neutral float-right" title="Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Frédérik Paradis
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,864 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Callbacks &mdash; Poutyne 0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Layers" href="layers.html" />
+    <link rel="prev" title="Metrics" href="metrics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/poutyne-light.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiment.html">Experiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Callbacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#callback-class">Callback class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#poutyne-s-callbacks">Poutyne’s Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checkpointing">Checkpointing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-poutyne.framework.callbacks.lr_scheduler">LR Schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-poutyne.framework.callbacks.policies">Policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#high-level-policies">High Level Policies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layers.html">Layers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Poutyne</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Callbacks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/callbacks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-poutyne">
+<span id="callbacks"></span><h1>Callbacks<a class="headerlink" href="#module-poutyne" title="Permalink to this headline">¶</a></h1>
+<p>Callbacks are a way to interact with the optimization process. For instance, the
+<a class="reference internal" href="#poutyne.framework.callbacks.ModelCheckpoint" title="poutyne.framework.callbacks.ModelCheckpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelCheckpoint</span></code></a> callback allows to save the weights of the epoch that has the
+best “score”, or the <a class="reference internal" href="#poutyne.framework.callbacks.EarlyStopping" title="poutyne.framework.callbacks.EarlyStopping"><code class="xref py py-class docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a> callback allows to stop the training
+when the “score” has not gone up for a while, etc. The following presents the
+callbacks available in Poutyne, but first the documentation of the <a class="reference internal" href="#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>
+class shows which methods are available in the callback and what arguments they
+are provided with.</p>
+<div class="section" id="callback-class">
+<h2>Callback class<a class="headerlink" href="#callback-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.Callback">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">Callback</code><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="poutyne.framework.callbacks.Callback.params">
+<code class="sig-name descname">params</code><a class="headerlink" href="#poutyne.framework.callbacks.Callback.params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains ‘epoch’ and ‘steps_per_epoch’ keys which are passed to the
+<a class="reference internal" href="model.html#poutyne.framework.Model.fit" title="poutyne.framework.Model.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">Model.fit()</span></code></a> function. It may contain other keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="poutyne.framework.callbacks.Callback.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#poutyne.framework.callbacks.Callback.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the <a class="reference internal" href="model.html#poutyne.framework.Model" title="poutyne.framework.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> object which is using the callback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="model.html#poutyne.framework.Model" title="poutyne.framework.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_backward_end">
+<code class="sig-name descname">on_backward_end</code><span class="sig-paren">(</span><em class="sig-param">batch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_backward_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_backward_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called after the backpropagation but before the optimization step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>batch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The batch number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_batch_begin">
+<code class="sig-name descname">on_batch_begin</code><span class="sig-paren">(</span><em class="sig-param">batch</em>, <em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_batch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the begining of each batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The batch number.</p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Usually an empty dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_batch_end">
+<code class="sig-name descname">on_batch_end</code><span class="sig-paren">(</span><em class="sig-param">batch</em>, <em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_batch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_batch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the end of each batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The batch number.</p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – <p>Contains the following keys:</p>
+<ul>
+<li><p>’batch’: The batch number.</p></li>
+<li><p>’loss’: The loss of the batch.</p></li>
+<li><p>’time’: The computation time of the batch.</p></li>
+<li><p>Other metrics: One key for each type of metrics.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">logs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;batch&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">0.10012837</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">4.34462</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="mf">0.766</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_epoch_begin">
+<code class="sig-name descname">on_epoch_begin</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_epoch_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the begining of each epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The epoch number.</p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Usually an empty dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_epoch_end">
+<code class="sig-name descname">on_epoch_end</code><span class="sig-paren">(</span><em class="sig-param">epoch</em>, <em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_epoch_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the end of each epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The epoch number.</p></li>
+<li><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – <p>Contains the following keys:</p>
+<ul>
+<li><p>’epoch’: The epoch number.</p></li>
+<li><p>’loss’: The average loss of the batches.</p></li>
+<li><p>’time’: The computation time of the epoch.</p></li>
+<li><p>Other metrics: One key for each type of metrics. The metrics are also averaged.</p></li>
+<li><p>val_loss’: The average loss of the batches on the validation set.</p></li>
+<li><p>Other metrics: One key for each type of metrics on the validation set. The metrics are also averaged.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">logs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mf">3.141519837</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="mf">4.34462</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="mf">0.766</span><span class="p">,</span>
+        <span class="s1">&#39;val_loss&#39;</span><span class="p">:</span> <span class="mf">5.2352</span><span class="p">,</span> <span class="s1">&#39;val_accuracy&#39;</span><span class="p">:</span> <span class="mf">0.682</span><span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_train_begin">
+<code class="sig-name descname">on_train_begin</code><span class="sig-paren">(</span><em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_train_begin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the begining of the training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Usually an empty dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="poutyne.framework.callbacks.Callback.on_train_end">
+<code class="sig-name descname">on_train_end</code><span class="sig-paren">(</span><em class="sig-param">logs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/callbacks.html#Callback.on_train_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.Callback.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is called before the end of the training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Usually an empty dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="poutyne-s-callbacks">
+<h2>Poutyne’s Callbacks<a class="headerlink" href="#poutyne-s-callbacks" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.TerminateOnNaN">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">TerminateOnNaN</code><a class="reference internal" href="_modules/poutyne/framework/callbacks/terminate_on_nan.html#TerminateOnNaN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.TerminateOnNaN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops the training when the loss is either <cite>NaN</cite> or <cite>inf</cite>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.BestModelRestore">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">BestModelRestore</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">mode='min'</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/best_model_restore.html#BestModelRestore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.BestModelRestore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the weights of the best model at the end of the training depending on a monitored quantity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Quantity to monitor. (Default value = ‘val_loss’)</p></li>
+<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – One of {‘min’, ‘max’}.
+Whether the monitored has to be maximized or minimized. For instance, for <cite>val_accuracy</cite>,
+this should be <cite>max</cite>, and for <cite>val_loss</cite>, this should be <cite>min</cite>, etc.
+(Default value = ‘min’)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to display a message when the model has improved or when restoring
+the best model.
+(Default value = False)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.EarlyStopping">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">EarlyStopping</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">min_delta=0</em>, <em class="sig-param">patience=0</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">mode='min'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/earlystopping.html#EarlyStopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.EarlyStopping" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source code of this class is under the MIT License and was copied from the Keras project,
+and has been modified.</p>
+<p>Stop training when a monitored quantity has stopped improving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Quantity to be monitored.</p></li>
+<li><p><strong>min_delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Minimum change in the monitored quantity to qualify as an improvement,
+i.e. an absolute change of less than min_delta, will count as no improvement.
+(Default value = 0)</p></li>
+<li><p><strong>patience</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of epochs with no improvement after which training will be stopped.
+(Default value = 0)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to print when early stopping is done.
+(Default value = False)</p></li>
+<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – One of {‘min’, ‘max’}. In <cite>min</cite> mode, training will stop when the quantity
+monitored has stopped decreasing; in <cite>max</cite> mode it will stop when the quantity monitored has
+stopped increasing.
+(Default value = ‘min’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.DelayCallback">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">DelayCallback</code><span class="sig-paren">(</span><em class="sig-param">callbacks</em>, <em class="sig-param">*</em>, <em class="sig-param">epoch_delay=None</em>, <em class="sig-param">batch_delay=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/delay.html#DelayCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.DelayCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delays one or many callbacks for a certain number of epochs or number of batches. If both
+<code class="docutils literal notranslate"><span class="pre">epoch_delay</span></code> and <code class="docutils literal notranslate"><span class="pre">batch_delay</span></code> are provided, the biggest has precedence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callbacks</strong> (<a class="reference internal" href="#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><em>Callback</em></a><em>, </em><em>List</em><em>[</em><a class="reference internal" href="#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><em>Callback</em></a><em>]</em>) – A callback or a list of callbacks to delay.</p></li>
+<li><p><strong>epoch_delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Number of epochs to delay.</p></li>
+<li><p><strong>batch_delay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><em>optional</em>) – Number of batches to delay. The number of batches can span many
+epochs. When the batch delay expires (i.e. there are more than <cite>batch_delay</cite> done), the
+<a class="reference internal" href="#poutyne.framework.callbacks.Callback.on_epoch_begin" title="poutyne.framework.callbacks.Callback.on_epoch_begin"><code class="xref py py-func docutils literal notranslate"><span class="pre">on_epoch_begin()</span></code></a> method is called on
+the callback(s) before the <a class="reference internal" href="#poutyne.framework.callbacks.Callback.on_batch_begin" title="poutyne.framework.callbacks.Callback.on_batch_begin"><code class="xref py py-func docutils literal notranslate"><span class="pre">on_batch_begin()</span></code></a> method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.ClipNorm">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">ClipNorm</code><span class="sig-paren">(</span><em class="sig-param">parameters</em>, <em class="sig-param">max_norm</em>, <em class="sig-param">*</em>, <em class="sig-param">norm_type=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/clip_grad.html#ClipNorm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.ClipNorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses PyTorch’s <a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.utils.clip_grad_norm_" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">clip_grad_norm_()</span></code></a>
+method to clip gradient.</p>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.utils.clip_grad_norm_" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.utils.clip_grad_norm_()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.ClipValue">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">ClipValue</code><span class="sig-paren">(</span><em class="sig-param">parameters</em>, <em class="sig-param">clip_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/clip_grad.html#ClipValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.ClipValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses PyTorch’s <a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.utils.clip_grad_value_" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">clip_grad_value_()</span></code></a>
+method to clip gradient.</p>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/nn.html#torch.nn.utils.clip_grad_value_" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.utils.clip_grad_value_()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.CSVLogger">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">CSVLogger</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">*</em>, <em class="sig-param">batch_granularity=False</em>, <em class="sig-param">separator='</em>, <em class="sig-param">'</em>, <em class="sig-param">append=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/logger.html#CSVLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.CSVLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback that outputs the result of each epoch or batch into a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The filename of the CSV.</p></li>
+<li><p><strong>batch_granularity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to also output the result of each batch in addition to the epochs.
+(Default value = False)</p></li>
+<li><p><strong>separator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The separator to use in the CSV.
+(Default value = ‘,’)</p></li>
+<li><p><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to append to an existing file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.TensorBoardLogger">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">TensorBoardLogger</code><span class="sig-paren">(</span><em class="sig-param">writer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/logger.html#TensorBoardLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.TensorBoardLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback that outputs the result of each epoch or batch into a Tensorboard experiment folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>writer</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensorboard.html#torch.utils.tensorboard.writer.SummaryWriter" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><em>SummaryWriter</em></a>) – The tensorboard writer.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Using TensorBoardLogger:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="k">import</span> <span class="n">SummaryWriter</span>
+<span class="kn">from</span> <span class="nn">poutyne.framework</span> <span class="k">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">poutyne.framework.callbacks</span> <span class="k">import</span> <span class="n">TensorBoardLogger</span>
+
+<span class="n">writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="s1">&#39;runs&#39;</span><span class="p">)</span>
+<span class="n">tb_logger</span> <span class="o">=</span> <span class="n">TensorBoardLogger</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">tb_logger</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="checkpointing">
+<h2>Checkpointing<a class="headerlink" href="#checkpointing" title="Permalink to this headline">¶</a></h2>
+<p>Poutyne provides callbacks for checkpointing the state of the optimization
+so that it can be stopped and restarted at a later point. All the checkpointing
+classes inherit the <a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a> class and, thus, have the same
+arguments in their constructors. They may have other arguments specific to their
+purpose.</p>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.PeriodicSaveCallback">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">PeriodicSaveCallback</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">*</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">mode='min'</em>, <em class="sig-param">save_best_only=False</em>, <em class="sig-param">period=1</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">temporary_filename=None</em>, <em class="sig-param">atomic_write=True</em>, <em class="sig-param">open_mode='wb'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/periodic.html#PeriodicSaveCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source code of this class is under the MIT License and was copied from the Keras project,
+and has been modified.</p>
+<p>Write a file after every epoch. <cite>filename</cite> can contain named formatting options, which will be
+filled the value of <cite>epoch</cite> and keys in <cite>logs</cite> (passed in <cite>on_epoch_end</cite>). For example: if
+<cite>filename</cite> is <cite>weights.{epoch:02d}-{val_loss:.2f}.txt</cite>, then <cite>save_file()</cite> will be called with a
+file descriptor for a file with the epoch number and the validation loss in the filename.</p>
+<p>By default, the file is written atomically to the specified filename so that the training can
+be killed and restarted later using the same filename for periodic file saving. To do so, a
+temporary file is created using the system’s <cite>tmp</cite> directory and then is moved to the final
+destination after the checkpoint is made. Sometimes, this move is not possible on some systems.
+To address this problem, it is possible to specify the destination of the temporary file using
+the <code class="docutils literal notranslate"><span class="pre">temporary_filename</span></code> argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Path to save the model file.</p></li>
+<li><p><strong>monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Quantity to monitor.
+(Default value = ‘val_loss’)</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to display a message when saving and restoring a checkpoint.
+(Default value = False)</p></li>
+<li><p><strong>save_best_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If <cite>save_best_only</cite> is true, the latest best model according to the
+quantity monitored will not be overwritten.
+(Default value = False)</p></li>
+<li><p><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – One of {‘min’, ‘max’}.
+If <cite>save_best_only</cite> is true, the decision to overwrite the current save file is made based
+on either the maximization or the minimization of the monitored quantity. For
+<cite>val_accuracy</cite>, this should be <cite>max</cite>, for <cite>val_loss</cite> this should be <cite>min</cite>, etc.
+(Default value = ‘min’)</p></li>
+<li><p><strong>period</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Interval (number of epochs) between checkpoints.
+(Default value = 1)</p></li>
+<li><p><strong>temporary_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) – Temporary filename for the checkpoint so that the
+last checkpoint can be written atomically. See the <code class="docutils literal notranslate"><span class="pre">atomic_write</span></code> argument.</p></li>
+<li><p><strong>atomic_write</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to write atomically the checkpoint. See the description above
+for details.
+(Default value = True)</p></li>
+<li><p><strong>open_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – <code class="docutils literal notranslate"><span class="pre">mode</span></code> option passed to <a class="reference external" href="https://docs.python.org/3/library/functions.html#open" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>.
+(Default value = ‘wb’)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.ModelCheckpoint">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">ModelCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">restore_best=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/checkpoint.html#ModelCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.ModelCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model after every epoch. See
+<a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a> for the arguments’ descriptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>restore_best</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If <cite>restore_best</cite> is true, the weights of the network will be reset to
+the last best checkpoint done. This option only works when <cite>save_best_only</cite> is also true.
+(Default value = False)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.OptimizerCheckpoint">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">OptimizerCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">*</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">mode='min'</em>, <em class="sig-param">save_best_only=False</em>, <em class="sig-param">period=1</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">temporary_filename=None</em>, <em class="sig-param">atomic_write=True</em>, <em class="sig-param">open_mode='wb'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/checkpoint.html#OptimizerCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.OptimizerCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the state of the optimizer after every epoch. The optimizer can be reloaded as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">load_optimizer_state</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a> for the arguments’ descriptions.</p>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.LRSchedulerCheckpoint">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">LRSchedulerCheckpoint</code><span class="sig-paren">(</span><em class="sig-param">lr_scheduler</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/checkpoint.html#LRSchedulerCheckpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.LRSchedulerCheckpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the state of an LR scheduler callback after every epoch. The LR scheduler callback should
+not be passed to the fit*() methods since it is called by this callback instead. The LR
+scheduler can be reloaded as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lr_scheduler</span> <span class="o">=</span> <span class="n">AnLRSchedulerCallback</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">lr_scheduler</span><span class="o">.</span><span class="n">load_state</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a> for the arguments’ descriptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lr_scheduler</strong> – An LR scheduler callback.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.PeriodicSaveLambda">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.</code><code class="sig-name descname">PeriodicSaveLambda</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/periodic.html#PeriodicSaveLambda"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.PeriodicSaveLambda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a lambda with a file descriptor after every epoch. See
+<a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a> for the arguments’ descriptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><em>fd</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>]</em>) – The lambda that will be called with a file descriptor, the
+epoch number and the epoch logs.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference internal" href="#poutyne.framework.callbacks.PeriodicSaveCallback" title="poutyne.framework.callbacks.PeriodicSaveCallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">PeriodicSaveCallback</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-poutyne.framework.callbacks.lr_scheduler">
+<span id="lr-schedulers"></span><h2>LR Schedulers<a class="headerlink" href="#module-poutyne.framework.callbacks.lr_scheduler" title="Permalink to this headline">¶</a></h2>
+<p>Poutyne’s callbacks for learning rate schedulers are just wrappers around <a class="reference external" href="http://pytorch.org/docs/master/optim.html#how-to-adjust-learning-rate">PyTorch’s learning rate
+schedulers</a> and thus have
+the same arguments except for the optimizer that has to be omitted.</p>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.CosineAnnealingLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">CosineAnnealingLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.CosineAnnealingLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">CosineAnnealingLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.CosineAnnealingWarmRestarts">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">CosineAnnealingWarmRestarts</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.CosineAnnealingWarmRestarts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingWarmRestarts" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">CosineAnnealingWarmRestarts</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.CyclicLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">CyclicLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.CyclicLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CyclicLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.ExponentialLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">ExponentialLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.ExponentialLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.ExponentialLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExponentialLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.LambdaLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">LambdaLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.LambdaLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.LambdaLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.MultiStepLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">MultiStepLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.MultiStepLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.MultiStepLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiStepLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.StepLR">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">StepLR</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.StepLR" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.StepLR" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">StepLR</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.lr_scheduler.ReduceLROnPlateau">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.lr_scheduler.</code><code class="sig-name descname">ReduceLROnPlateau</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">monitor='val_loss'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/lr_scheduler.html#ReduceLROnPlateau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.lr_scheduler.ReduceLROnPlateau" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The quantity to monitor. (Default value = ‘val_loss’)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>See:</dt><dd><p><a class="reference external" href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau" title="(in PyTorch vmaster (1.3.0a0+d91e490 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReduceLROnPlateau</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-poutyne.framework.callbacks.policies">
+<span id="policies"></span><h2>Policies<a class="headerlink" href="#module-poutyne.framework.callbacks.policies" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">policies</span></code> module is an alternative way to configure your training process. It gives you fine
+grained control over the process.</p>
+<p>The training is divided into phases with the <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> class.
+A <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> contains parameter spaces (e.g. learning rate,
+or momentum, or both) for the optimizer. You chain <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a>
+instances by passing them to the <a class="reference internal" href="#poutyne.framework.callbacks.policies.OptimizerPolicy" title="poutyne.framework.callbacks.policies.OptimizerPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizerPolicy</span></code></a>.
+<a class="reference internal" href="#poutyne.framework.callbacks.policies.OptimizerPolicy" title="poutyne.framework.callbacks.policies.OptimizerPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizerPolicy</span></code></a> is a <a class="reference internal" href="#poutyne.framework.callbacks.Callback" title="poutyne.framework.callbacks.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a>
+that uses the phases, steps through them, and sets the parameters of the optimizer.</p>
+<dl class="class">
+<dt id="poutyne.framework.callbacks.policies.Phase">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">Phase</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">lr=None</em>, <em class="sig-param">momentum=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#Phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.Phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines how to configure an optimizer.</p>
+<p>For each train step it returns a dictionary that contains the configuration for the optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lr</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em><em>, </em><em>optional</em>) – a configuration space for the learning rate.</p></li>
+<li><p><strong>momentum</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em><em>, </em><em>optional</em>) – a configuration space for the momentum.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="poutyne.framework.callbacks.policies.OptimizerPolicy">
+<em class="property">class </em><code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">OptimizerPolicy</code><span class="sig-paren">(</span><em class="sig-param">phases: List</em>, <em class="sig-param">*</em>, <em class="sig-param">initial_step: int = 0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#OptimizerPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.OptimizerPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combine different <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> instances
+in an <a class="reference internal" href="#poutyne.framework.callbacks.policies.OptimizerPolicy" title="poutyne.framework.callbacks.policies.OptimizerPolicy"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizerPolicy</span></code></a> and execute the policies in a
+row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phases</strong> (<em>List</em><em>[</em><a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><em>Phase</em></a><em>]</em>) – A list of <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> instances.</p></li>
+<li><p><strong>initial_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The step to start the policy in. Used for restarting.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="poutyne.framework.callbacks.policies.linspace">
+<code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">linspace</code><span class="sig-paren">(</span><em class="sig-param">start: float</em>, <em class="sig-param">end: float</em>, <em class="sig-param">steps: int</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#linspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.linspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lazy linear parameter space that goes from <code class="docutils literal notranslate"><span class="pre">start</span></code> to <code class="docutils literal notranslate"><span class="pre">end</span></code> in <code class="docutils literal notranslate"><span class="pre">steps</span></code> steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the start point.</p></li>
+<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the end point.</p></li>
+<li><p><strong>steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of steps between start and end.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[0.0, 0.5, 1.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="poutyne.framework.callbacks.policies.cosinespace">
+<code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">cosinespace</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">steps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#cosinespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.cosinespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lazy cosine parameter space that goes from <code class="docutils literal notranslate"><span class="pre">start</span></code> to <code class="docutils literal notranslate"><span class="pre">end</span></code> in <code class="docutils literal notranslate"><span class="pre">steps</span></code> steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the start point.</p></li>
+<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the end point.</p></li>
+<li><p><strong>steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of steps between start and end.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">cosinespace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[0.0, 0.5, 1.0]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="high-level-policies">
+<h3>High Level Policies<a class="headerlink" href="#high-level-policies" title="Permalink to this headline">¶</a></h3>
+<p>Ready to use policies.</p>
+<dl class="function">
+<dt id="poutyne.framework.callbacks.policies.one_cycle_phases">
+<code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">one_cycle_phases</code><span class="sig-paren">(</span><em class="sig-param">steps: int</em>, <em class="sig-param">lr: Tuple[float</em>, <em class="sig-param">float] = (0.1</em>, <em class="sig-param">1)</em>, <em class="sig-param">momentum: Tuple[float</em>, <em class="sig-param">float] = (0.95</em>, <em class="sig-param">0.85)</em>, <em class="sig-param">finetune_lr: float = 0.01</em>, <em class="sig-param">finetune_fraction: float = 0.1</em><span class="sig-paren">)</span> &#x2192; List[poutyne.framework.callbacks.policies.Phase]<a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#one_cycle_phases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.one_cycle_phases" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “one-cycle” policy as described in the paper <a class="reference external" href="https://arxiv.org/abs/1708.07120">Super-Convergence: Very Fast Training of
+Neural Networks Using Large Learning Rates</a>.</p>
+<p>You might want to read the paper and adjust the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the total number of steps to take.</p></li>
+<li><p><strong>lr</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em>) – tuple for the triangular learning rate (start, middle).</p></li>
+<li><p><strong>momentum</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em>) – tuple for the triangular momentum (start, middle).</p></li>
+<li><p><strong>finetune_lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – target learning rate for the final fine tuning. Should be smaller than
+<cite>min(lr)</cite>.</p></li>
+<li><p><strong>finetune_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – fraction of steps used for the fine tuning.
+Must be between 0 and 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of configured <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> instances.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1708.07120">Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="poutyne.framework.callbacks.policies.sgdr_phases">
+<code class="sig-prename descclassname">poutyne.framework.callbacks.policies.</code><code class="sig-name descname">sgdr_phases</code><span class="sig-paren">(</span><em class="sig-param">base_cycle_length: int</em>, <em class="sig-param">cycles: int</em>, <em class="sig-param">lr: Tuple[float</em>, <em class="sig-param">float] = (1.0</em>, <em class="sig-param">0.1)</em>, <em class="sig-param">cycle_mult: int = 2</em><span class="sig-paren">)</span> &#x2192; List[poutyne.framework.callbacks.policies.Phase]<a class="reference internal" href="_modules/poutyne/framework/callbacks/policies.html#sgdr_phases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#poutyne.framework.callbacks.policies.sgdr_phases" title="Permalink to this definition">¶</a></dt>
+<dd><p>The “SGDR” policy as described in the paper <a class="reference external" href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts</a>.</p>
+<p>Note the total number of steps is calculated like this: <cite>total_steps = sum(base_cycle_length *
+(cycle_mult ** i) for i in range(cycles))</cite></p>
+<p>You might want to read the paper and adjust the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_cycle_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – number of steps for the first cycle.</p></li>
+<li><p><strong>cycles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of repetitions.</p></li>
+<li><p><strong>lr</strong> (<em>Typle</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>]</em>) – tuple for the learning rate for one cycle: (start, end).</p></li>
+<li><p><strong>cycle_mult</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – multiply the last cycle length with this every cycle. The length of a cycle
+grows exponentially.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of configured <a class="reference internal" href="#poutyne.framework.callbacks.policies.Phase" title="poutyne.framework.callbacks.policies.Phase"><code class="xref py py-class docutils literal notranslate"><span class="pre">Phase</span></code></a> instances.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p><a class="reference external" href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts</a></p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="layers.html" class="btn btn-neutral float-right" title="Layers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metrics.html" class="btn btn-neutral float-left" title="Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Frédérik Paradis
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
